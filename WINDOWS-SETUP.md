@@ -19,17 +19,17 @@ This machine is used as the primary Windows workstation for Power BI, database t
 
 ## Development and Command-Line Tools
 
-- Git 2.55.0
+- Git 2.55.0.windows.3
 - GitHub CLI 2.101.0
 - Python 3.13.13
-- Python Launcher
+- Python Launcher 3.14.7
 - Node.js 24.12.0
-- npm
-- uv
+- npm 11.6.2
+- uv 0.12.16
 - aria2 1.37.0
-- 7-Zip 26.03
-- jq
-- ripgrep (`rg`)
+- 7-Zip 26.03 (x64)
+- jq 1.8.2
+- ripgrep (`rg`) 15.2.0
 - Ookla Speedtest CLI 1.2.0.84
 
 ## Java Runtime
