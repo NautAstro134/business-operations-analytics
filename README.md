@@ -52,6 +52,12 @@ Delivery performance varied substantially by shipping mode:
 
 Monthly sales remained relatively stable through much of 2015–2017 before declining sharply near the end of the dataset.
 
+## Recommendations
+
+- Review the First Class carrier contract and fulfillment process first; its 95.32% late-delivery rate is the most urgent operational problem.
+- Shift eligible orders from First Class and Second Class to better-performing shipping options until service levels improve.
+- Investigate the sharp decline in sales near the end of the dataset before using the trend for forecasting, since it may reflect incomplete data or a genuine demand problem.
+  
 ## Data Validation
 
 Dashboard results were independently validated against PostgreSQL queries.
