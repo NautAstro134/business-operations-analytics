@@ -85,3 +85,6 @@ Validated metrics include:
 DataCo SMART Supply Chain dataset.
 
 The raw dataset contains 180,519 records. Data was loaded into PostgreSQL and transformed into an analytics-ready table before being imported into Power BI.
+
+---
+I build dashboards like this from Excel, sales, and operational data. Contact: [LinkedIn](https://www.linkedin.com/in/roustam-mamedov-analytics/)
