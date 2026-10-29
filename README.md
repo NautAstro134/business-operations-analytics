@@ -1,8 +1,8 @@
 # Business Operations Analytics Dashboard
 
-A business operations analytics project built with PostgreSQL and Microsoft Power BI using the DataCo SMART Supply Chain dataset.
+A PostgreSQL and Microsoft Power BI project using the DataCo SMART Supply Chain dataset.
 
-The project analyzes more than 180,000 supply-chain records to examine sales, profitability, product performance, markets, shipping methods, and late deliveries.
+The project analyzes 180,519 supply-chain records to examine sales, profitability, product performance, markets, shipping methods, and late deliveries.
 
 ## Dashboard
 
@@ -17,23 +17,48 @@ The project analyzes more than 180,000 supply-chain records to examine sales, pr
 - Customers: 20,652
 - Products: 118
 
+## Reproduce the Analysis
+
+### 1. Download the dataset
+
+Download **DataCo SMART Supply Chain for Big Data Analysis** from the original [Mendeley Data record](https://data.mendeley.com/datasets/8gx2fvg2k6/1).
+
+Place `DataCoSupplyChainDataset.csv` at:
+
+`data/raw/DataCoSupplyChainDataset.csv`
+
+The dataset is not committed because of its size and because its source schema contains customer contact and password fields that are unnecessary for this analysis.
+
+### 2. Create an analytics-safe file
+
+Run:
+
+```bash
+python scripts/prepare_safe_dataset.py
+```
+
+This creates `data/processed/dataco_analytics_safe.csv` containing only the fields required by the dashboard. Customer email, password, street address, first name, last name, latitude, and longitude are excluded.
+
+### 3. Create and load PostgreSQL tables
+
+From the repository root, run:
+
+```bash
+psql -d business_operations -f sql/01_load.sql
+psql -d business_operations -f sql/02_transform.sql
+psql -d business_operations -f sql/03_analysis.sql
+```
+
+`01_load.sql` recreates the raw analytics table and loads the processed CSV. `02_transform.sql` creates a typed view for Power BI. `03_analysis.sql` reproduces and validates the main dashboard metrics.
+
 ## Dashboard Analysis
 
-The dashboard provides several views of business performance:
-
-- Total Sales by Market
-- Total Profit by Market
+- Total Sales and Profit by Market
 - Total Sales by Category
 - Late Delivery Rate by Shipping Mode
 - Monthly Sales Trend
 
-Interactive filters allow analysis by:
-
-- Market
-- Shipping Mode
-- Order Status
-- Order Date
-- Customer Segment
+Interactive filters support Market, Shipping Mode, Order Status, Order Date, and Customer Segment.
 
 ## Key Findings
 
@@ -54,37 +79,24 @@ Monthly sales remained relatively stable through much of 2015–2017 before decl
 
 ## Recommendations
 
-- Review the First Class carrier contract and fulfillment process first; its 95.32% late-delivery rate is the most urgent operational problem.
-- Shift eligible orders from First Class and Second Class to better-performing shipping options until service levels improve.
-- Investigate the sharp decline in sales near the end of the dataset before using the trend for forecasting, since it may reflect incomplete data or a genuine demand problem.
-  
+- Review the First Class carrier contract and fulfillment process first.
+- Shift eligible orders toward better-performing shipping options while service levels are investigated.
+- Investigate the late-period sales decline before using the trend for forecasting.
+
 ## Data Validation
 
-Dashboard results were independently validated against PostgreSQL queries.
-
-Validated metrics include:
-
-- Total Sales
-- Total Profit
-- Late Deliveries
-- Sales by Market
-- Profit by Market
-- Sales by Category
-- Late Delivery Rate by Shipping Mode
-- Monthly Sales Trend
+Dashboard results were independently validated against PostgreSQL queries for total sales, total profit, late deliveries, sales and profit by market, sales by category, late-delivery rate by shipping mode, and monthly sales.
 
 ## Technology
 
 - PostgreSQL
 - Microsoft Power BI
 - SQL
-- Git / GitHub
+- Python standard library
+- Git and GitHub
 
-## Dataset
+## Privacy Design
 
-DataCo SMART Supply Chain dataset.
+The original source includes fields that are not needed for portfolio analytics. The published workflow deliberately excludes direct customer contact details, passwords, street addresses, and precise coordinates before database loading.
 
-The raw dataset contains 180,519 records. Data was loaded into PostgreSQL and transformed into an analytics-ready table before being imported into Power BI.
-
----
-I build dashboards like this from Excel, sales, and operational data. Contact: [LinkedIn](https://www.linkedin.com/in/roustam-mamedov-analytics/)
+Contact: [LinkedIn](https://www.linkedin.com/in/roustam-mamedov-analytics/)
