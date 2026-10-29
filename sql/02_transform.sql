@@ -1,2 +1,23 @@
--- Typed analytics view without customer PII
-CREATE OR REPLACE VIEW public.supply_chain_analytics AS SELECT "Order Id"::bigint AS order_id, "Customer Id"::bigint AS customer_id, "Product Card Id"::bigint AS product_id, "Category Name" AS category_name, "Product Name" AS product_name, "Market" AS market, "Order Region" AS order_region, "Customer Segment" AS customer_segment, "Shipping Mode" AS shipping_mode, "Delivery Status" AS delivery_status, "Late_delivery_risk"::integer AS late_delivery_risk, "order date (DateOrders)"::timestamp AS order_date, "shipping date (DateOrders)"::timestamp AS shipping_date, NULLIF("Days for shipping (real)", '')::numeric AS actual_shipping_days, NULLIF("Days for shipment (scheduled)", '')::numeric AS scheduled_shipping_days, NULLIF(REPLACE("Sales", ',', ''), '')::numeric AS sales, NULLIF(REPLACE("Order Profit Per Order", ',', ''), '')::numeric AS profit, NULLIF("Order Item Quantity", '')::numeric AS quantity, NULLIF(REPLACE("Order Item Product Price", ',', ''), '')::numeric AS product_price, NULLIF(REPLACE("Order Item Discount", ',', ''), '')::numeric AS discount FROM public.supply_chain_raw;
+CREATE OR REPLACE VIEW public.supply_chain_analytics AS
+SELECT
+    NULLIF(order_id, '')::bigint AS order_id,
+    NULLIF(customer_id, '')::bigint AS customer_id,
+    NULLIF(product_id, '')::bigint AS product_id,
+    category_name,
+    product_name,
+    market,
+    order_region,
+    customer_segment,
+    shipping_mode,
+    delivery_status,
+    NULLIF(late_delivery_risk, '')::integer AS late_delivery_risk,
+    NULLIF(order_date, '')::timestamp AS order_date,
+    NULLIF(shipping_date, '')::timestamp AS shipping_date,
+    NULLIF(actual_shipping_days, '')::numeric AS actual_shipping_days,
+    NULLIF(scheduled_shipping_days, '')::numeric AS scheduled_shipping_days,
+    NULLIF(REPLACE(sales, ',', ''), '')::numeric AS sales,
+    NULLIF(REPLACE(profit, ',', ''), '')::numeric AS profit,
+    NULLIF(quantity, '')::numeric AS quantity,
+    NULLIF(REPLACE(product_price, ',', ''), '')::numeric AS product_price,
+    NULLIF(REPLACE(discount, ',', ''), '')::numeric AS discount
+FROM public.supply_chain_raw;
